@@ -85,7 +85,14 @@ export class AuroraExampleStack extends cdk.Stack {
         kmsKey: encryptionKey,
         dbSecret,
         vpc,
-      }
+      },
     );
+
+    dbSecret.addRotationSchedule("RotationSchedule", {
+      automaticallyAfter: cdk.Duration.days(30),
+      hostedRotation: secretsmanager.HostedRotation.postgreSqlSingleUser({
+        vpc,
+      }),
+    });
   }
 }

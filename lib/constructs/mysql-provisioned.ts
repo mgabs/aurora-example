@@ -14,6 +14,8 @@ interface ConstructInterface extends cdk.StackProps {
 }
 
 export class MysqlProvisioned extends Construct {
+  cluster: rds.DatabaseCluster;
+
   constructor(scope: Construct, id: string, props: ConstructInterface) {
     super(scope, id);
 
@@ -50,6 +52,8 @@ export class MysqlProvisioned extends Construct {
         ),
       },
     );
+
+    this.cluster = auroraCluster;
 
     // Output the database cluster endpoint
     new cdk.CfnOutput(this, `${props.name}ClusterEndpoint`, {
